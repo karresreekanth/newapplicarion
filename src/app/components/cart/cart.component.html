@@ -1,0 +1,44 @@
+<!-- Body -->
+<div class="modal-body" *ngIf="cart.length > 0; else emptyCart">
+  <table class="table table-hover align-middle">
+    <thead class="table-light">
+      <tr>
+        <th>Product</th>
+        <th class="text-center">Quantity</th>
+        <th class="text-end">Unit Price</th>
+        <th class="text-end">Total</th>
+        <th class="text-center">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of cart">
+        <td>{{ item.productName }}</td>
+        <td class="text-center">
+          <div class="d-flex justify-content-center align-items-center gap-2">
+            <button class="btn btn-sm btn-outline-secondary" (click)="decreaseQuantity(item.productId)">−</button>
+            <span>{{ item.quantity }}</span>
+            <button class="btn btn-sm btn-outline-secondary" (click)="increaseQuantity(item.productId)">+</button>
+          </div>
+        </td>
+        <td class="text-end">₹{{ item.price }}</td>
+        <td class="text-end fw-bold">₹{{ item.price * item.quantity }}</td>
+        <td class="text-center">
+          <button class="btn btn-sm btn-outline-danger" (click)="removeFromCart(item.productId,item.cartId)">
+            ❌ Remove
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="text-end mt-3">
+    <h5 class="fw-bold">Total Amount: ₹{{ getTotalAmount() }}</h5>
+    <button class="btn btn-success mt-2" (click)="checkoutCart()">Checkout</button>
+  </div>
+</div>
+
+<ng-template #emptyCart>
+  <div class="text-center p-4 text-muted">
+    🛒 Your cart is empty
+  </div>
+</ng-template>

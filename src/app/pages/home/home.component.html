@@ -1,0 +1,209 @@
+
+<label for="categorySelect">Select Category:</label>
+<select id="categorySelect" [(ngModel)]="selectedCategoryId" (change)="filterByCategory()" class="form-select">
+  <option [value]="0" disabled>Select a category</option>
+  <option *ngFor="let category of productcategoriess" [value]="category.categoryId">
+    {{ category.categoryName }}
+  </option>
+</select>
+
+
+<div class="row mt-4" *ngIf="products.length > 0">
+  <div class="col-sm-6 col-md-4 col-lg-3 mb-4" *ngFor="let product of products">
+    <div class="card h-100 shadow-sm">
+      <img [src]="product.imageUrl" class="card-img-top" [alt]="product.productName">
+      <div class="card-body">
+        <h5 class="card-title">{{ product.productName }}</h5>
+        <p class="card-text">
+          <strong>Price:</strong> ₹{{ product.price }}<br>
+          <strong>Stock:</strong> {{ product.stock }}<br>
+          <strong>Description:</strong> {{ product.description }}
+        </p>
+        <div class="d-flex justify-content-between mt-2">
+          <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#gracemarksview"
+                  (click)="viewDetails(product.productId, product.categoryId)">
+            View Details
+          </button>
+
+          <button class="btn btn-outline-info" (click)="goToCart(product.productId)">
+            Add Cart
+          </button>
+
+
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+</div>
+<!--data-bs-toggle="modal" data-bs-target="#gracemarksview"-->
+
+<ng-template #noProducts>
+  <p class="text-muted">No products found for the selected category.</p>
+</ng-template>
+
+<!-- Cart Preview -->
+<!--<div class="mt-5">
+  <h5>🛒 Your Cart ({{ cart.length }} items)</h5>
+  <ul class="list-group">
+    <li class="list-group-item d-flex justify-content-between align-items-center"
+        *ngFor="let item of cart">
+      {{ item.productName }} – ₹{{ item.price }}
+      <button class="btn btn-sm btn-outline-danger" (click)="removeFromCart(item.productId)">
+        ❌ Remove
+      </button>
+    </li>
+  </ul>
+</div>-->
+<!-- Cart Modal -->
+<!-- 🛒 Cart Modal -->
+<!-- 🛒 Cart Modal -->
+<!--<div class="modal fade" id="cartModal" data-bs-backdrop="static" data-bs-keyboard="false"
+     tabindex="-1" aria-labelledby="cartModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-scrollable">
+    <div class="modal-content">-->
+
+      <!-- Header -->
+      <!--<div class="modal-header">
+        <h5 class="modal-title" id="cartModalLabel">
+          🛒 Your Cart ({{ cart.length }} items)
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>-->
+
+      <!-- Body -->
+      <!--<div class="modal-body" *ngIf="cart.length > 0; else emptyCart">
+        <table class="table table-hover align-middle">
+          <thead class="table-light">
+            <tr>
+              <th>Product</th>
+              <th class="text-center">Quantity</th>
+              <th class="text-end">Unit Price</th>
+              <th class="text-end">Total</th>
+              <th class="text-center">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of cart">
+              <td>{{ item.productName }}</td>
+              <td class="text-center">
+                <div class="d-flex justify-content-center align-items-center gap-2">
+                  <button class="btn btn-sm btn-outline-secondary" (click)="decreaseQuantity(item.productId)">−</button>
+                  <span>{{ item.quantity }}</span>
+                  <button class="btn btn-sm btn-outline-secondary" (click)="addToCartitem(item.productId,)">+</button>
+                </div>
+              </td>
+              <td class="text-end">₹{{ item.price }}</td>
+              <td class="text-end fw-bold">₹{{ item.price * item.quantity }}</td>
+              <td class="text-center">
+                <button class="btn btn-sm btn-outline-danger" (click)="removeFromCart(item.productId)">
+                  ❌ Remove
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="text-end mt-3">
+          <h5 class="fw-bold">Total Amount: ₹{{ getTotalAmount() }}</h5>
+        </div>
+      </div>-->
+
+      <!-- Footer -->
+      <!--<div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-success" (click)="checkoutCart()">🧾 Checkout</button>
+      </div>
+
+
+    </div>
+  </div>
+</div>-->
+
+<!-- Empty Cart Template -->
+<ng-template #emptyCart>
+  <div class="modal-body text-center py-4 text-muted">
+    <p>Your cart is currently empty.</p>
+  </div>
+</ng-template>
+
+
+<!-- Empty Cart Template -->
+<ng-template #emptyCart>
+  <div class="modal-body text-center text-muted py-4">
+    <p>Your cart is currently empty.</p>
+  </div>
+</ng-template>
+
+
+<!-- Empty Cart Fallback -->
+<ng-template #emptyCart>
+  <p class="text-muted">Your cart is currently empty.</p>
+</ng-template>
+
+<!-- Product Details Modal -->
+<div class="modal fade" id="gracemarksview" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="gracemarksviewLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-scrollable">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="gracemarksviewLabel">Product Details</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <!-- Modal Body -->
+
+
+      <div class="modal-body" *ngFor="let data of serverdata">
+        <div class="text-center mb-4">
+          <img [src]="data.imageUrl" [alt]="data.productName" class="img-fluid rounded shadow-sm" style="max-height: 150px;">
+        </div>
+
+        <table class="table table-bordered">
+          <tbody>
+            <tr>
+              <th scope="row">Image</th>
+              <td>{{ data.productName }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Product Name</th>
+              <td>{{ data.productName }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Category</th>
+              <td>{{ data.categoryName }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Price</th>
+              <td>₹ {{ data.price }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Stock</th>
+              <td>{{ data.stock }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Description</th>
+              <td>{{ data.description }}</td>
+            </tr>
+            <tr>
+              <th scope="row"> Created Date</th>
+              <td>{{ data.createdAt }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+

@@ -1,0 +1,40 @@
+
+.card {
+  border-radius: 8px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+  .card:hover {
+    transform: scale(0.97);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+  }
+
+.card-img-top {
+  height: 160px;
+  object-fit: cover;
+  border: 2px solid transparent;
+  transition: transform 0.3s ease, border 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover .card-img-top {
+  transform: scale(1.05);
+  border-color: #007bff;
+  box-shadow: 0 0 10px rgba(0, 123, 255, 0.4);
+}
+.modal-body {
+  font-family: 'Segoe UI', sans-serif;
+  color: #333;
+}
+
+  .modal-body h4 {
+    margin-bottom: 0.5rem;
+  }
+
+  .modal-body p {
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+.img-fluid {
+  border: 2px solid #eee;
+}

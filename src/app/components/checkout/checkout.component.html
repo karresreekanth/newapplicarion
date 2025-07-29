@@ -1,0 +1,26 @@
+<div *ngIf="cart.length > 0; else emptyCart">
+  <h2>🧾 Checkout Summary</h2>
+  <table class="table">
+    <thead>
+      <tr><th>Product</th><th>Qty</th><th>Price</th><th>Total</th></tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of cart">
+        <td>{{ item.productName }}</td>
+        <td>{{ item.quantity }}</td>
+        <td>₹{{ item.price }}</td>
+        <td>₹{{ item.price * item.quantity }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+
+
+  <h3>Total: ₹{{ totalAmount }}</h3>
+  <button class="btn btn-primary" (click)="PlaceOrder()">Place Order</button>
+</div>
+<ng-template #emptyCart>
+  <div class="text-center p-4 text-muted">
+    🛒 Order placed successfully
+  </div>
+</ng-template>
